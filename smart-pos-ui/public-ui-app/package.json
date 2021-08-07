@@ -1,0 +1,13 @@
+{
+  "name": "public-ui-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "astro dev",
+    "build": "astro build"
+  },
+  "dependencies": {
+    "astro": "^0.18.9"
+  }
+}

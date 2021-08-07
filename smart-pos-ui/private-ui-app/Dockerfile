@@ -1,3 +1,18 @@
-FROM nginx:1.17.1-alpine
-COPY ./index.html /usr/share/nginx/html/index.html
+# build environment
+FROM node:14-alpine as build
+
+WORKDIR /app
+
+ENV PATH /app/node_modules/.bin:$PATH
+COPY package.json ./
+COPY yarn.lock ./
+
+RUN yarn install --production
+COPY . ./
+RUN yarn build
+
+# production environment
+FROM nginx:stable-alpine
+COPY --from=build /app/build /usr/share/nginx/html
 EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
