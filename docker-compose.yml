@@ -1,0 +1,53 @@
+version: '3'
+services:
+  smart-pos-postgres:
+    image: 'postgres:12.3-alpine'
+    container_name: smart-pos-postgres
+    volumes:
+      - smart-pos-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=smart-pos
+      - POSTGRES_USER=smart-pos
+      - POSTGRES_PASSWORD=smart-pos
+
+  smart-pos-strapi:
+    build:
+      context: smart-pos-strapi
+      dockerfile: Dockerfile
+    container_name: smart-pos-strapi
+    environment:
+      DATABASE_CLIENT: postgres
+      DATABASE_NAME: smart-pos
+      DATABASE_HOST: smart-pos-postgres
+      DATABASE_PORT: 5432
+      DATABASE_USERNAME: smart-pos
+      DATABASE_PASSWORD: smart-pos
+    ports:
+      - 1337:1337
+    links:
+      - smart-pos-postgres
+
+  smart-pos-public-ui:
+    build:
+      context: smart-pos-ui/public-ui-app
+      dockerfile: Dockerfile
+    container_name: smart-pos-public-ui
+    ports:
+      - 4200:80
+    links:
+      - smart-pos-strapi
+
+  smart-pos-private-ui:
+    build:
+      context: smart-pos-ui/private-ui-app
+      dockerfile: Dockerfile
+    container_name: smart-pos-private-ui
+    ports:
+      - 4300:80
+    links:
+      - smart-pos-strapi
+
+volumes:
+  smart-pos-data:
