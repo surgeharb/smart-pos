@@ -35,7 +35,7 @@ services:
       dockerfile: Dockerfile
     container_name: smart-pos-public-ui
     ports:
-      - 4200:80
+      - 4200:3000
     links:
       - smart-pos-strapi
 
