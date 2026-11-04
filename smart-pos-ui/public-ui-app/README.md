@@ -2,6 +2,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+Requires Node.js 24.22.1+ (24.x) and Yarn 1.x. Install with `yarn install --frozen-lockfile`.
+
 First, run the development server:
 
 ```bash

@@ -1,5 +1,7 @@
 # build output
 dist
+.next/
+*.tsbuildinfo
 
 # dependencies
 node_modules/
